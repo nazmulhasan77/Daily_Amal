@@ -1,7 +1,8 @@
+import 'package:daily_amal/authentication/ForgotPasswordPage.dart';
 import 'package:daily_amal/authentication/login.dart';
 import 'package:daily_amal/authentication/register_page.dart';
 import 'package:daily_amal/firebase_options.dart';
-import 'package:daily_amal/homepage.dart';
+import 'package:daily_amal/pages/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -19,7 +20,7 @@ class MyApp1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Firebase Login',
+      title: 'Daily Amal Tracker',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -27,7 +28,8 @@ class MyApp1 extends StatelessWidget {
       routes: {
         '/login': (context) => LoginPage(),
         '/register': (context) => RegisterPage(),
-        '/home': (context) => Homepage(),
+        '/forgotPassword': (context) => ForgotPasswordPage(),
+        '/home': (context) => HomePage(),
       },
     );
   }

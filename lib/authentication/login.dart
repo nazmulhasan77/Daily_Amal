@@ -27,8 +27,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pushReplacementNamed(context, '/home');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content: Text('Please verify your email before logging in.')),
+          SnackBar(content: Text('Please verify your email before logging in.')),
         );
       }
     } catch (e) {
@@ -39,29 +38,6 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _isLoading = false;
       });
-    }
-  }
-
-  void _resetPassword() async {
-    if (_emailController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text('Please enter your email to reset your password.')),
-      );
-      return;
-    }
-
-    try {
-      await _auth.sendPasswordResetEmail(
-        email: _emailController.text.trim(),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Password reset email sent. Check your inbox.')),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error sending reset email. Please try again.')),
-      );
     }
   }
 
@@ -154,7 +130,9 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   TextButton(
-                    onPressed: _resetPassword,
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/forgotPassword');
+                    },
                     child: Text(
                       'Forgot Password?',
                       style: TextStyle(color: Colors.redAccent),

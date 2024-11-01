@@ -35,9 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
         if (!user.emailVerified) {
           await user.sendEmailVerification();
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-                content:
-                    Text('Verification email sent. Please check your inbox.')),
+            SnackBar(content: Text('Verification email sent. Please check your inbox.')),
           );
         }
 
@@ -47,6 +45,8 @@ class _RegisterPageState extends State<RegisterPage> {
           'name': _nameController.text.trim(),
           'phone': _phoneController.text.trim(),
         });
+
+        Navigator.pushReplacementNamed(context, '/login');
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -62,64 +62,78 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.blueGrey[50],
       appBar: AppBar(
-        title: Text('Create Account',
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.deepPurpleAccent,
+        title: Text('Register'),
         centerTitle: true,
+        backgroundColor: Colors.blueGrey,
+        elevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
+      body: Center(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: 20),
-              Text(
-                'Join Us!',
-                style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.deepPurpleAccent),
-              ),
-              SizedBox(height: 20),
-              CircleAvatar(
-                radius: 50,
-                backgroundColor: Colors.deepPurpleAccent.withOpacity(0.1),
-                child: Icon(Icons.person_add,
-                    size: 60, color: Colors.deepPurpleAccent),
-              ),
-              SizedBox(height: 30),
-              _buildTextField(_nameController, 'Full Name', Icons.person),
-              SizedBox(height: 20),
-              _buildTextField(_phoneController, 'Phone Number', Icons.phone),
-              SizedBox(height: 20),
-              _buildTextField(_emailController, 'Email', Icons.email),
-              SizedBox(height: 20),
-              _buildTextField(_passwordController, 'Password', Icons.lock,
-                  isPassword: true),
-              SizedBox(height: 30),
-              _isLoading
-                  ? CircularProgressIndicator(color: Colors.deepPurpleAccent)
-                  : SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.deepPurpleAccent,
-                          padding: EdgeInsets.symmetric(vertical: 16),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
-                        ),
-                        onPressed: _register,
-                        child: Text(
-                          'Register',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                      ),
+          child: Card(
+            elevation: 8,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Create Account',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blueGrey[700],
                     ),
-            ],
+                  ),
+                  SizedBox(height: 24),
+                  _buildTextField(_nameController, 'Full Name', Icons.person),
+                  SizedBox(height: 16),
+                  _buildTextField(_phoneController, 'Phone Number', Icons.phone),
+                  SizedBox(height: 16),
+                  _buildTextField(_emailController, 'Email', Icons.email),
+                  SizedBox(height: 16),
+                  _buildTextField(_passwordController, 'Password', Icons.lock, isPassword: true),
+                  SizedBox(height: 24),
+                  _isLoading
+                      ? CircularProgressIndicator()
+                      : SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: _register,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blueGrey,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              padding: EdgeInsets.symmetric(vertical: 16),
+                            ),
+                            child: Text(
+                              'Register',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/login');
+                    },
+                    child: Text(
+                      'Already have an account? Login here',
+                      style: TextStyle(color: Colors.blueGrey),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -136,21 +150,12 @@ class _RegisterPageState extends State<RegisterPage> {
       controller: controller,
       obscureText: isPassword,
       decoration: InputDecoration(
-        prefixIcon: Icon(icon, color: Colors.deepPurpleAccent),
+        prefixIcon: Icon(icon, color: Colors.blueGrey),
         labelText: label,
-        labelStyle: TextStyle(color: Colors.deepPurpleAccent),
-        filled: true,
-        fillColor: Colors.white,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.deepPurpleAccent),
         ),
       ),
-      style: TextStyle(color: Colors.black87),
     );
   }
 }
